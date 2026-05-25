@@ -1,0 +1,90 @@
+### 1. Health Check
+GET http://127.0.0.1:8000/health
+Accept: application/json
+
+###
+
+### 2. Create Enquiry (Pricing SOP Match)
+POST http://127.0.0.1:8000/enquiry
+Content-Type: application/json
+
+{
+  "customer_name": "Alice Smith",
+  "channel": "whatsapp",
+  "message": "Hi, I am looking to get a price quote. How much do your SMB plans cost?"
+}
+
+###
+
+### 3. Create Enquiry (Booking SOP Match)
+POST http://127.0.0.1:8000/enquiry
+Content-Type: application/json
+
+{
+  "customer_name": "Bob Johnson",
+  "channel": "email",
+  "message": "Hello, I want to book a slot for a meeting to discuss standard operating procedures."
+}
+
+###
+
+### 4. Create Enquiry (Technical SOP Match)
+POST http://127.0.0.1:8000/enquiry
+Content-Type: application/json
+
+{
+  "customer_name": "Charlie Brown",
+  "channel": "call",
+  "message": "My connection is broken, getting a database login error when I try to save. Help!"
+}
+
+###
+
+### 5. Create Enquiry (No SOP Match -> Auto-Escalation fallback)
+POST http://127.0.0.1:8000/enquiry
+Content-Type: application/json
+
+{
+  "customer_name": "Diana Prince",
+  "channel": "whatsapp",
+  "message": "Hey there! I am just browsing around, having a lovely day."
+}
+
+###
+
+### 6. Get History & Status Timeline (Replace ID with actual ID returned, e.g. 1)
+GET http://127.0.0.1:8000/enquiry/1/history
+Accept: application/json
+
+###
+
+### 7. Get History & Status Timeline (For Auto-Escalated, e.g. ID 4)
+GET http://127.0.0.1:8000/enquiry/4/history
+Accept: application/json
+
+###
+
+### 8. Schedule Follow-up (Replace ID with actual ID)
+POST http://127.0.0.1:8000/enquiry/1/follow-up
+Content-Type: application/json
+
+{
+  "delay_minutes": 15,
+  "message_template": "Hi Alice, checking back to see if you have any questions on pricing packages."
+}
+
+###
+
+### 9. Manual Agent Escalation (Replace ID with actual ID)
+POST http://127.0.0.1:8000/enquiry/2/escalate
+Content-Type: application/json
+
+{
+  "reason": "Bob requested a call-back from a manager specifically."
+}
+
+###
+
+### 10. Check Health check with DB connection active
+GET http://127.0.0.1:8000/health
+Accept: application/json
